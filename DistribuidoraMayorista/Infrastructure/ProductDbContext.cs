@@ -14,6 +14,71 @@ namespace Infrastructure
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>()
+                .HasDiscriminator<string>("UserType")
+                .HasValue<Client>("Client")
+                .HasValue<SysAdmin>("SysAdmin")
+                .HasValue<Admin>("Admin");
+
+            
+
+            //modelBuilder.Entity<SysAdmin>().HasData(
+            //    new SysAdmin
+            //    {
+            //        Id = 2,
+            //        UserName = "admin",
+            //        Email = "admin2@gmail.com",
+            //        UserType = "SysAdmin",
+            //        Password = "Admin123"
+            //    }
+            //);
+            
+            //modelBuilder.Entity<Admin>().HasData(
+            //    new Admin
+            //    {
+            //        Id = 3,
+            //        UserName = "Mateo",
+            //        Email = "mateo@gmail.com",
+            //        UserType = "Admin",
+            //        Password = "MATEO"
+            //    }
+            //);
+
+            //modelBuilder.Entity<Admin>().HasData(
+            //    new Admin
+            //    {
+            //        Id = 4,
+            //        UserName = "Felipe",
+            //        Email = "felipe@gmail.com",
+            //        UserType = "Admin",
+            //        Password = "FELIPE"
+            //    }
+            //);
+            
+            //modelBuilder.Entity<Client>().HasData(
+            //    new Client
+            //    {
+            //        Id = 5,
+            //        UserName = "Emanuel",
+            //        Email = "emanuel@gmail.com",
+            //        UserType = "Client",
+            //        Password = "EMANUEL"
+            //    }
+            //);
+
+            //modelBuilder.Entity<Client>().HasData(
+            //    new Client
+            //    {
+            //        Id = 6,
+            //        UserName = "Sergio",
+            //        Email = "sergio@gmail.com",
+            //        UserType = "Client",
+            //        Password = "SERGIO"
+            //    }
+            //);
+
+
+
             modelBuilder.Entity<Product>().HasData(
                 //Bebidas
                 new Product { ProductId = 1, ProductName = "Coca-Cola", ProductBrand = "Coca-Cola", ProductDetail = "Refresco de cola de 355 ml", ProductPrice = 1200, ProductCategory = "Bebidas", ProductImageUrl = "https://http2.mlstatic.com/D_NQ_NP_914318-MLV45347421529_032021-O.webp" },

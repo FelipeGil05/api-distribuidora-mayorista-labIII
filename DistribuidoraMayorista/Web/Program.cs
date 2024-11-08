@@ -18,7 +18,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocalhost", policy =>
     {
-        policy.WithOrigins("http://localhost:5179")  // Origen permitido (tu frontend)
+        policy.WithOrigins("http://localhost:5174")  // Origen permitido (tu frontend)
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -110,6 +110,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("AllowLocalhost");
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

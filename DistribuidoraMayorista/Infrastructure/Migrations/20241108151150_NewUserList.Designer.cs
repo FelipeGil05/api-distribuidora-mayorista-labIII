@@ -2,6 +2,7 @@
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    partial class BookDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241108151150_NewUserList")]
+    partial class NewUserList
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
@@ -250,11 +253,83 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("UserType")
                         .IsRequired()
+                        .HasMaxLength(8)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasDiscriminator<string>("UserType").HasValue("User");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("Domain.Entities.Admin", b =>
+                {
+                    b.HasBaseType("Domain.Entities.User");
+
+                    b.HasDiscriminator().HasValue("Admin");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 3,
+                            Email = "mateo@gmail.com",
+                            Password = "MATEO",
+                            UserName = "Mateo",
+                            UserType = "Admin"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Email = "felipe@gmail.com",
+                            Password = "FELIPE",
+                            UserName = "Felipe",
+                            UserType = "Admin"
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Entities.Client", b =>
+                {
+                    b.HasBaseType("Domain.Entities.User");
+
+                    b.HasDiscriminator().HasValue("Client");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 5,
+                            Email = "emanuel@gmail.com",
+                            Password = "EMANUEL",
+                            UserName = "Emanuel",
+                            UserType = "Client"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Email = "sergio@gmail.com",
+                            Password = "SERGIO",
+                            UserName = "Sergio",
+                            UserType = "Client"
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Entities.SysAdmin", b =>
+                {
+                    b.HasBaseType("Domain.Entities.User");
+
+                    b.HasDiscriminator().HasValue("SysAdmin");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 2,
+                            Email = "admin2@gmail.com",
+                            Password = "Admin123",
+                            UserName = "admin",
+                            UserType = "SysAdmin"
+                        });
                 });
 #pragma warning restore 612, 618
         }

@@ -16,14 +16,56 @@ namespace Application.Services
             _userRepository = userRepository;
         }
 
-        public UserDto? GetUser(string email, string password)
+        public List<UserDto> GetUsers()
         {
-            var user = _userRepository.GetUser(email, password);
 
-            return user == null ? null : new UserDto { Email = user.Email};
+            var users = _userRepository.GetUsers();
+
+            return users
+                .Select(user => new UserDto
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    Password = user.Password,
+                    UserType = user.UserType,
+                })
+                .ToList();
         }
 
-      
-     
+        public int AddUser(UserDto userDto)
+        {
+            return _userRepository.AddUser(new User
+            {
+                UserName = userDto.UserName,
+                Email = userDto.Email,
+                Password = userDto.Password,
+                UserType = userDto.UserType,
+            });
+        }
+
+        public UserDto UpdateUser(int id, UserDto userDto)
+        {
+            var user = new User
+            {
+                Id = userDto.Id,
+                UserName = userDto.UserName,
+                Email = userDto.Email,
+                Password = userDto.Password,
+                UserType = userDto.UserType,
+            };
+
+            _userRepository.UpdateUser(id, user);
+
+            return userDto;
+        }
+
+        public void DeleteUser(int id)
+        {
+            _userRepository.DeleteUser(id);
+        }
+
+
+
     }
 }
