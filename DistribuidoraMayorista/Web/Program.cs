@@ -33,7 +33,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(setupAction =>
 {
-    setupAction.AddSecurityDefinition("BookChampionsApiBearerAuth", new OpenApiSecurityScheme() //Esto va a permitir usar swagger con el token.
+    setupAction.AddSecurityDefinition("DistribuidoraMayoristaApiBearerAuth", new OpenApiSecurityScheme() //Esto va a permitir usar swagger con el token.
     {
         Type = SecuritySchemeType.Http,
         Scheme = "Bearer",
@@ -48,14 +48,14 @@ builder.Services.AddSwaggerGen(setupAction =>
                 Reference = new OpenApiReference
                 {
                     Type = ReferenceType.SecurityScheme,
-                    Id = "BookChampionsApiBearerAuth" } //Tiene que coincidir con el id seteado arriba en la definición
+                    Id = "DistribuidoraMayoristaApiBearerAuth" } //Tiene que coincidir con el id seteado arriba en la definición
                 }, new List<string>() }
     });
 
 
 });
 
-string connectionString = builder.Configuration["ConnectionStrings:BooksDBConnectionString"]!;
+string connectionString = builder.Configuration["ConnectionStrings:DistribuidoraMayoristaDBConnectionString"]!;
 
 // Configure the SQLite connection
 var connection = new SqliteConnection(connectionString);

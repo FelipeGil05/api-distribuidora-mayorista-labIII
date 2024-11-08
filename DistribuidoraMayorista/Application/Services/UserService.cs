@@ -35,12 +35,19 @@ namespace Application.Services
 
         public int AddUser(UserDto userDto)
         {
+            string userType = userDto.UserType switch
+            {
+                "Admin" => "Admin",
+                "SysAdmin" => "SysAdmin",
+                _ => "Client" 
+            };
+
             return _userRepository.AddUser(new User
             {
                 UserName = userDto.UserName,
                 Email = userDto.Email,
                 Password = userDto.Password,
-                UserType = userDto.UserType,
+                UserType = userType,
             });
         }
 
