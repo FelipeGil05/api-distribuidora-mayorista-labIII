@@ -7,6 +7,10 @@ namespace Infrastructure.Repository
     {
         private readonly ProductDbContext _dbContext;
 
+        public User? GetUserById(int id)  
+        {
+            return _dbContext.Users.FirstOrDefault(u => u.Id == id);
+        }
         public User? GetUser(string email, string password)
         {
             return _dbContext.Users.FirstOrDefault(x => x.Email == email && x.Password == password);

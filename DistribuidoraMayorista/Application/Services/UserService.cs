@@ -53,18 +53,21 @@ namespace Application.Services
 
         public UserDto UpdateUser(int id, UserDto userDto)
         {
-            var user = new User
+
+            var existingUser = _userRepository.GetUserById(id);
+
+            if (existingUser == null)
             {
-                Id = userDto.Id,
-                UserName = userDto.UserName,
-                Email = userDto.Email,
-                Password = userDto.Password,
-                UserType = userDto.UserType,
-            };
+                throw new Exception("Usuario no encontrado.");
+            }
 
-            _userRepository.UpdateUser(id, user);
+            existingUser.UserName = userDto.UserName;
+            existingUser.Email = userDto.Email;
+            existingUser.Password = userDto.Password;
 
-            return userDto;
+            _userRepository.UpdateUser(id, existingUser);
+
+            return UserDto.Create(existingUser);
         }
 
         public void DeleteUser(int id)
