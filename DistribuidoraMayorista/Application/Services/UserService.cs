@@ -61,9 +61,8 @@ namespace Application.Services
                 throw new Exception("Usuario no encontrado.");
             }
 
-            existingUser.UserName = userDto.UserName;
-            existingUser.Email = userDto.Email;
-            existingUser.Password = userDto.Password;
+            existingUser.UserName = userDto.UserName ?? existingUser.UserName;
+            existingUser.Email = userDto.Email ?? existingUser.Email;
 
             _userRepository.UpdateUser(id, existingUser);
 
