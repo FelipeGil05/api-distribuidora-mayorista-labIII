@@ -1,9 +1,10 @@
-﻿using Application.Models.Requests;
+﻿using Application.Models.Responses;
+using Application.Models.Requests;
 
 namespace Application.Interfaces
 {
     public interface ICustomAuthenticationService
     {
-        string Login(LoginRequest loginRequest);
+        LoginResponses Login(LoginRequest loginRequest);
     }
 }

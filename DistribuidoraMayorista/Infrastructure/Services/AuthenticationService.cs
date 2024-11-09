@@ -1,4 +1,5 @@
 ﻿using Application.Models.Requests;
+using Application.Models.Responses;
 using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.Extensions.Options;
@@ -32,7 +33,7 @@ namespace Infrastructure.Services
 
         }
 
-        public string? Login(LoginRequest rq)
+        public LoginResponses? Login(LoginRequest rq)
         {
             var user = ValidateUser(rq); //Lo primero que hacemos es llamar a una función que valide los parámetros que enviamos.
 
@@ -41,7 +42,20 @@ namespace Infrastructure.Services
                 return null;
             }
 
+            var token = GenerateToken(user);
 
+            return new LoginResponses
+            {
+                Token = token,
+                Id = user.Id,
+                Email = user.Email,
+                UserType = user.UserType
+            };
+        }
+
+
+        private string GenerateToken(User user)
+        {
             //Paso 2: Crear el token
             var securityPassword = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_options.SecretForKey)); //Traemos la SecretKey del Json. agregar antes: using Microsoft.IdentityModel.Tokens;
 
@@ -51,22 +65,23 @@ namespace Infrastructure.Services
             var claimsForToken = new List<Claim>
             {
                 new("sub", user.Id.ToString()), //"sub" es una key estándar que significa unique user identifier, es decir, si mandamos el id del usuario por convención lo hacemos con la key "sub".
-                new ("role", "Cliente")
+                new ("role", user.UserType)
             };
 
             var jwtSecurityToken = new JwtSecurityToken( //agregar using System.IdentityModel.Tokens.Jwt; Acá es donde se crea el token con toda la data que le pasamos antes.
-              _options.Issuer,
-              _options.Audience,
-              claimsForToken,
-              DateTime.UtcNow,
-              DateTime.UtcNow.AddHours(1),
-              credentials);
+                _options.Issuer,
+                _options.Audience,
+                claimsForToken,
+                DateTime.UtcNow,
+                DateTime.UtcNow.AddHours(1),
+                credentials);
 
             var tokenToReturn = new JwtSecurityTokenHandler() //Pasamos el token a string
                 .WriteToken(jwtSecurityToken);
 
             return tokenToReturn.ToString();
         }
+        
         public class AuthenticacionServiceOptions
         {
             public const string AuthenticacionService = "AuthenticacionService";
