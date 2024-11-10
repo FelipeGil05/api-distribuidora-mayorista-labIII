@@ -36,6 +36,27 @@ namespace Application.Services
                 .ToList();
         }
 
+        public ProductDto GetProductById(int productId)
+        {
+            var product = _productRepository.GetProductById(productId);
+
+            if (product == null)
+            {
+                return null;
+            }
+
+            return new ProductDto
+            {
+                ProductId = product.ProductId,
+                ProductName = product.ProductName,
+                ProductBrand = product.ProductBrand,
+                ProductDetail = product.ProductDetail,
+                ProductPrice = product.ProductPrice,
+                ProductImageUrl = product.ProductImageUrl,
+                ProductCategory = product.ProductCategory,
+            };
+        }
+
         public int AddProduct(ProductDto productDto)
         {
             return _productRepository.AddProduct(new Product

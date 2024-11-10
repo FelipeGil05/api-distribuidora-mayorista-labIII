@@ -17,6 +17,11 @@ namespace Infrastructure.Repository
             return _dbContext.Products.ToList();
         }
 
+        public Product GetProductById(int productId)
+        {
+            return _dbContext.Products.FirstOrDefault(p => p.ProductId == productId);
+        }
+
         public int AddProduct(Product product)
         {
             _dbContext.Products.Add(product);

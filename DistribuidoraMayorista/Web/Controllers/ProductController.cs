@@ -25,6 +25,19 @@ namespace Web.Controllers
             return Ok(_productService.GetProducts());
         }
 
+        [HttpGet("{productid:int}")]
+        public IActionResult GetById(int productid)
+        {
+            var product = _productService.GetProductById(productid);
+
+            if (product == null)
+            {
+                return NotFound($"Producto con ID {productid} no encontrado.");
+            }
+
+            return Ok(product);
+        }
+
         [HttpPost]
         public IActionResult Post(ProductDto productDto)
         {
