@@ -3,6 +3,7 @@ using System;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    partial class BookDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241110201233_EditMyBuys")]
+    partial class EditMyBuys
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
@@ -32,32 +35,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("BuysId");
 
                     b.ToTable("Buys");
-                });
-
-            modelBuilder.Entity("Domain.Entities.DateMembership", b =>
-                {
-                    b.Property<decimal>("MembershipPrice")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("MembershipDescription")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("MembershipTitle")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("MembershipPrice");
-
-                    b.ToTable("DateMembership");
-
-                    b.HasData(
-                        new
-                        {
-                            MembershipPrice = 50000m,
-                            MembershipDescription = "Suscríbete a nuestra membresía y unete al club!Obtendras muchos beneficios, como un 20% de descuento en el precio total de todas tus compras.Estas a tan solo un simple paso de unirte!NO PIERDAS LA OPORTUNIDAD!",
-                            MembershipTitle = "Membresía Premium"
-                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.DetailBuys", b =>
@@ -83,31 +60,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("BuysId");
 
                     b.ToTable("DetailBuys");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Membership", b =>
-                {
-                    b.Property<int>("MembershipId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("MembershipId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Memberships");
                 });
 
             modelBuilder.Entity("Domain.Entities.Product", b =>
@@ -382,17 +334,6 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Buys", null)
                         .WithMany("Details")
                         .HasForeignKey("BuysId");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Membership", b =>
-                {
-                    b.HasOne("Domain.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.Buys", b =>

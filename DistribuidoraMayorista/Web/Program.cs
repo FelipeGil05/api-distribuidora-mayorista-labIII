@@ -83,6 +83,9 @@ builder.Services.AddDbContext<ProductDbContext>(dbContextOptions => dbContextOpt
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IBuysRepository, BuysRepository>();
+builder.Services.AddScoped<IMembershipRepository, MembershipRepository>();
+builder.Services.AddScoped<IDateMembershipRepository, DateMembershipRepository>();
 
 
 #endregion
@@ -91,6 +94,9 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<BuysService>();
+builder.Services.AddScoped<MembershipService>();
+builder.Services.AddScoped<DateMembershipService>();
 builder.Services.Configure<AuthenticacionServiceOptions>(
    builder.Configuration.GetSection(AuthenticacionServiceOptions.AuthenticacionService));
 builder.Services.AddScoped<ICustomAuthenticationService,AuthenticationService>();

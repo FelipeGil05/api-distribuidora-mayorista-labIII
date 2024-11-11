@@ -3,6 +3,7 @@ using System;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ProductDbContext))]
-    partial class BookDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241111065325_AddDateMembership")]
+    partial class AddDateMembership
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
@@ -36,7 +39,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.DateMembership", b =>
                 {
-                    b.Property<decimal>("MembershipPrice")
+                    b.Property<string>("MembershipPrice")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("MembershipDescription")
@@ -54,7 +57,7 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            MembershipPrice = 50000m,
+                            MembershipPrice = "$50.000/mes",
                             MembershipDescription = "Suscríbete a nuestra membresía y unete al club!Obtendras muchos beneficios, como un 20% de descuento en el precio total de todas tus compras.Estas a tan solo un simple paso de unirte!NO PIERDAS LA OPORTUNIDAD!",
                             MembershipTitle = "Membresía Premium"
                         });

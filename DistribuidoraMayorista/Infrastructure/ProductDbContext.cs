@@ -10,6 +10,9 @@ namespace Infrastructure
         public DbSet<Client> Clients { get; set; }
         public DbSet<Admin> Admins { get; set; }
         public DbSet<SysAdmin> SysAdmins { get; set; }
+        public DbSet<Buys> Buys { get; set; } 
+        public DbSet<Membership> Memberships { get; set; }
+        public DbSet<DateMembership> DateMembership { get; set; }
 
         public ProductDbContext() { }
 
@@ -106,6 +109,17 @@ namespace Infrastructure
                 new Product { ProductId = 17, ProductName = "Pringles", ProductBrand = "Pringles", ProductDetail = "Papas fritas de diferentes sabores de 150 g", ProductPrice = 2000, ProductCategory = "Snacks", ProductImageUrl = "https://jumboargentina.vtexassets.com/arquivos/ids/800601/Papas-Fritas-Pringles-Original-X104gs-1-1000004.jpg?v=638355837787270000" },
                 new Product { ProductId = 18, ProductName = "Saladix", ProductBrand = "Arcor", ProductDetail = "Galletitas saladas de diferentes sabores de 100 g", ProductPrice = 1000, ProductCategory = "Snacks", ProductImageUrl = "https://jumboargentina.vtexassets.com/arquivos/ids/766461/Galletitas-Saladix-Jam-n-100-Gr-Galletitas-Saladix-Jam-n-100-Gr-1-3368.jpg?v=638104413673200000" }
             );
+
+            modelBuilder.Entity<DateMembership>().HasData(
+                new DateMembership { 
+                    MembershipTitle = "Membresía Premium", 
+                    MembershipDescription = "Suscríbete a nuestra membresía y unete al club!" +
+                    "Obtendras muchos beneficios, como un 20% de descuento en el precio total de todas tus compras." +
+                    "Estas a tan solo un simple paso de unirte!" +
+                    "NO PIERDAS LA OPORTUNIDAD!",
+                    MembershipPrice = 50000
+                }
+                );
         }
     }
 }
