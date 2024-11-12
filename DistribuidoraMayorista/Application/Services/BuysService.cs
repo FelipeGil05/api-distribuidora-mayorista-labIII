@@ -26,40 +26,14 @@ namespace Application.Services
                 PurchaseDate = b.PurchaseDate,
                 Details = b.Details.Select(d => new DetailBuysDto
                 {
-                    DetailId = d.DetailId,
-                    ProductDetailId = d.ProductDetailId,
-                    Amount = d.Amount,
-                    UnitPrice = d.UnitPrice
+                    DetailBuysId = d.DetailBuysId,
+                    ProductId = d.ProductId,
+                    ProductName = d.ProductName,
+                    UnitPrice = d.UnitPrice,
+                    Quantity = d.Quantity
                 }).ToList(),
-                TotalBuy = b.Details.Sum(d => d.Amount * d.UnitPrice)
+                TotalBuy = b.TotalBuy
             }).ToList();
-        }
-
-        public BuysDto GetBuyById(int id)
-        {
-            var buy = _buysRepository.GetBuyById(id);
-
-            if (buy == null)
-            {
-                return null;
-            }
-
-            decimal totalBuy = buy.Details.Sum(d => d.Amount * d.UnitPrice);
-
-            return new BuysDto
-            {
-                BuysId = buy.BuysId,
-                UserBuysId = buy.UserBuysId,
-                PurchaseDate = buy.PurchaseDate,
-                Details = buy.Details.Select(d => new DetailBuysDto
-                {
-                    DetailId = d.DetailId,
-                    ProductDetailId = d.ProductDetailId,
-                    Amount = d.Amount,
-                    UnitPrice = d.UnitPrice
-                }).ToList(),
-                TotalBuy = totalBuy
-            };
         }
 
         public List<BuysDto> GetBuysByUserId(int userId)
@@ -73,16 +47,17 @@ namespace Application.Services
                 PurchaseDate = b.PurchaseDate,
                 Details = b.Details.Select(d => new DetailBuysDto
                 {
-                    DetailId = d.DetailId,
-                    ProductDetailId = d.ProductDetailId,
-                    Amount = d.Amount,
-                    UnitPrice = d.UnitPrice
+                    DetailBuysId = d.DetailBuysId,
+                    ProductId = d.ProductId,
+                    ProductName = d.ProductName,
+                    UnitPrice = d.UnitPrice,
+                    Quantity = d.Quantity
                 }).ToList(),
-                TotalBuy = b.Details.Sum(d => d.Amount * d.UnitPrice)
+                TotalBuy = b.TotalBuy
             }).ToList();
         }
 
-        public int AddBuy(BuysDto buysDto)
+        public BuysDto AddBuy(BuysDto buysDto)
         {
             var buy = new Buys
             {
@@ -90,39 +65,30 @@ namespace Application.Services
                 PurchaseDate = buysDto.PurchaseDate,
                 Details = buysDto.Details.Select(d => new DetailBuys
                 {
-                    ProductDetailId = d.ProductDetailId,
-                    Amount = d.Amount,
-                    UnitPrice = d.UnitPrice
+                    ProductId = d.ProductId,
+                    ProductName = d.ProductName,
+                    UnitPrice = d.UnitPrice,
+                    Quantity = d.Quantity
                 }).ToList()
             };
 
-            return _buysRepository.AddBuy(buy);
-        }
+            var createdBuy = _buysRepository.AddBuy(buy);
 
-        public BuysDto UpdateBuy(int buysId, BuysDto buysDto)
-        {
-            var buy = new Buys
+            return new BuysDto
             {
-                BuysId = buysId,
-                UserBuysId = buysDto.UserBuysId,
-                PurchaseDate = buysDto.PurchaseDate,
-                Details = buysDto.Details.Select(d => new DetailBuys
+                BuysId = createdBuy.BuysId,
+                UserBuysId = createdBuy.UserBuysId,
+                PurchaseDate = createdBuy.PurchaseDate,
+                Details = createdBuy.Details.Select(d => new DetailBuysDto
                 {
-                    DetailId = d.DetailId,
-                    ProductDetailId = d.ProductDetailId,
-                    Amount = d.Amount,
-                    UnitPrice = d.UnitPrice
-                }).ToList()
+                    DetailBuysId = d.DetailBuysId,
+                    ProductId = d.ProductId,
+                    ProductName = d.ProductName,
+                    UnitPrice = d.UnitPrice,
+                    Quantity = d.Quantity
+                }).ToList(),
+                TotalBuy = createdBuy.TotalBuy
             };
-
-            _buysRepository.UpdateBuy(buysId, buy);
-
-            return buysDto;
-        }
-
-        public void DeleteBuy(int id)
-        {
-            _buysRepository.DeleteBuy(id);
         }
     }
 }

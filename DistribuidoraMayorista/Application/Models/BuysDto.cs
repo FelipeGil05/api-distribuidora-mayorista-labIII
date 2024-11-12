@@ -11,10 +11,11 @@
 
     public class DetailBuysDto
     {
-        public int DetailId { get; set; }
-        public int ProductDetailId { get; set; }
-        public int Amount { get; set; }
+        public int DetailBuysId { get; set; }
+        public int ProductId { get; set; }
+        public string ProductName { get; set; }
         public decimal UnitPrice { get; set; }
-        public decimal Total => Amount * UnitPrice;
+        public int Quantity { get; set; }
+        public decimal Total => UnitPrice * Quantity;
     }
 }

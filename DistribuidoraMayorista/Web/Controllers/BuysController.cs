@@ -24,17 +24,6 @@ namespace Web.Controllers
             return Ok(buys);
         }
 
-        [HttpGet("{id:int}")]
-        public IActionResult GetById(int id)
-        {
-            var buy = _buysService.GetBuyById(id);
-            if (buy == null)
-            {
-                return NotFound($"Compra con ID {id} no encontrada.");
-            }
-            return Ok(buy);
-        }
-
         [HttpGet("user/{userId:int}")]
         public IActionResult GetBuysByUserId(int userId)
         {
@@ -43,34 +32,10 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(BuysDto buysDto)
+        public IActionResult AddBuy([FromBody] BuysDto buysDto)
         {
-            _buysService.AddBuy(buysDto);
-            return CreatedAtAction(nameof(GetById), new { id = buysDto.BuysId }, buysDto);
-        }
-
-        [HttpPut("{id:int}")]
-        public IActionResult Put(int id, [FromBody] BuysDto buysDto)
-        {
-            if (id != buysDto.BuysId)
-            {
-                return BadRequest("El ID de la compra no coincide.");
-            }
-
-            var updatedBuy = _buysService.UpdateBuy(id, buysDto);
-            if (updatedBuy == null)
-            {
-                return NotFound($"Compra con ID {id} no encontrada.");
-            }
-
-            return Ok(updatedBuy);
-        }
-
-        [HttpDelete("{id:int}")]
-        public IActionResult Delete(int id)
-        {
-            _buysService.DeleteBuy(id);
-            return Ok();
+            var newBuy = _buysService.AddBuy(buysDto);
+            return CreatedAtAction(nameof(GetBuysByUserId), new { userId = buysDto.UserBuysId }, newBuy);
         }
     }
 }
