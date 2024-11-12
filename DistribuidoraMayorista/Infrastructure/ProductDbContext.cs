@@ -112,6 +112,7 @@ namespace Infrastructure
 
             modelBuilder.Entity<DateMembership>().HasData(
                 new DateMembership { 
+                    MembershipId = 1,
                     MembershipTitle = "Membresía Premium", 
                     MembershipDescription = "Suscríbete a nuestra membresía y unete al club!" +
                     "Obtendras muchos beneficios, como un 20% de descuento en el precio total de todas tus compras." +

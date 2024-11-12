@@ -8,6 +8,7 @@ namespace Application.Models
 {
     public class DateMembershipDto
     {
+        public int MembershipId { get; set; }
         public decimal MembershipPrice { get; set; }
         public required string MembershipTitle { get; set; }
         public required string MembershipDescription { get; set; }

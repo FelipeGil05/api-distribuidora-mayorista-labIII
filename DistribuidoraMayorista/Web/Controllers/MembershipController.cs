@@ -17,6 +17,13 @@ namespace Web.Controllers
             _membershipService = membershipService;
         }
 
+        [HttpGet("getUserId")]
+        public ActionResult GetUserId(int number) { 
+            var result = _membershipService.GetUserId(number);
+
+            return Ok(result);
+        }
+
         [HttpPost("activate")]
         public IActionResult ActivateMembership([FromBody] ActivateMembershipRequest request)
         {

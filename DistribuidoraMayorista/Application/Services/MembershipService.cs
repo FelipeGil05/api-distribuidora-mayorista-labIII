@@ -14,6 +14,13 @@ namespace Application.Services
             _membershipRepository = membershipRepository;
         }
 
+        public int GetUserId(int number)
+        {
+            var result = _membershipRepository.GetUserId(number);
+
+            return result;
+        }
+
         public Result ActivateMembership(int userId, DateTime startDate)
         {
             var membership = _membershipRepository.ActivateMembership(userId, startDate);

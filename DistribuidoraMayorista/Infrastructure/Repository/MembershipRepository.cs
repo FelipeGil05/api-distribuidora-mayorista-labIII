@@ -15,6 +15,14 @@ namespace Infrastructure.Repository
         {
             _context = context;
         }
+        public int GetUserId(int number)
+        {
+            var result = _context.Memberships
+                                   .Where(p => p.UserId == number)
+                                   .Select(p => p.UserId)
+                                   .FirstOrDefault();
+            return result;
+        }
 
         public Membership ActivateMembership(int userId, DateTime startDate)
         {
